@@ -85,10 +85,26 @@ function Login() {
         const data = await response.json();
         localStorage.setItem("accessToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
-        navigate("/admin");
+        localStorage.setItem("firstName", data.user.first_name);
+        localStorage.setItem("userRole", data.user.role);
+        localStorage.setItem("userRole", data.user.role);
+
+        if (data.user.role === "admin" || data.user.role === "superadmin") {
+          navigate("/admin");
+        } else {
+          navigate("/member");
+        }
         console.log("Logged in successfully");
       } else {
-        console.error("Login failed");
+        const errorText = await response.text();
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          throw new Error("An unknown error occurred");
+        }
+        const firstErrorMessage = Object.values(errorData).flat()[0];
+        throw new Error(firstErrorMessage);
       }
     } catch (error) {
       console.error("Error details:", error);

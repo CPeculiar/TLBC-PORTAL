@@ -209,7 +209,6 @@ const Register = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // "X-CSRFTOKEN": getCookie("csrftoken"),
           },
           credentials: "include",
           body: JSON.stringify(formData),
@@ -217,15 +216,44 @@ const Register = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        let errorData;
+
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          throw new Error("An unknown error occurred");
+        }
+
+        // Extract the first error message
+        const firstErrorMessage = Object.values(errorData).flat()[0];
+        throw new Error(firstErrorMessage);
       }
-      const data = await response.json();
 
       if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("accessToken", data.access);
+        localStorage.setItem("refreshToken", data.refresh);
+        localStorage.setItem("firstName", data.user.first_name);
+        localStorage.setItem("userRole", data.user.role);
+
+       if (data.user.role === "admin" || data.user.role === "superadmin") {
         navigate("/admin");
       } else {
-        let errorMessage = data.message || "An unknown error occurred";
-        alert(errorMessage);
+        navigate("/member");
+      }
+        console.log("Logged in successfully");
+      } else {
+        const errorText = await response.text();
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          throw new Error("An unknown error occurred");
+        }
+        const firstErrorMessage = Object.values(errorData).flat()[0];
+        throw new Error(firstErrorMessage);
       }
     } catch (error) {
       console.error("Error details:", error);
@@ -234,21 +262,6 @@ const Register = () => {
       setIsLoading(false);
     }
   };
-
-  // const getCookie = (name) => {
-  //   let cookieValue = null;
-  //   if (document.cookie && document.cookie !== "") {
-  //     const cookies = document.cookie.split(";");
-  //     for (let i = 0; i < cookies.length; i++) {
-  //       const cookie = cookies[i].trim();
-  //       if (cookie.substring(0, name.length + 1) === `${name}=`) {
-  //         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-  //         break;
-  //       }
-  //     }
-  //   }
-  //   return cookieValue;
-  // };
 
   const validatePhone = (phone) => {
     const re = /^\d{11}$/;

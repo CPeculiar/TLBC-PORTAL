@@ -9,6 +9,7 @@ import {
   Navbar,
   Nav,
   Pagination,
+  Container,
 } from "react-bootstrap";
 import {
   BarChart,
@@ -44,6 +45,8 @@ const AdminDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const tootalMembers = localStorage.getItem("tootalMembers") || "0";
+  const firstName = localStorage.getItem("firstName") || "User";
   const [searchOptions, setSearchOptions] = useState({
     showAllMembers: false,
     name: "",
@@ -61,7 +64,6 @@ const AdminDashboard = () => {
     wfsGraduationYearMin: "",
     wfsGraduationYearMax: "",
   });
-
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -104,6 +106,8 @@ const AdminDashboard = () => {
   
       setSearchResults(response.data.results);
       setTotalMembers(response.data.count);
+      localStorage.setItem("tootalMembers", response.data.count);
+      
     } catch (error) {
       console.error("Error fetching search results:", error);
     }finally {
@@ -491,7 +495,7 @@ const AdminDashboard = () => {
   };
 
   const chartData = [
-    { name: "Total", value: totalMembers },
+    { name: "Total", value: tootalMembers },
     { name: "Male", value: totalMale },
     { name: "Female", value: totalFemale },
   ];
@@ -507,7 +511,7 @@ const AdminDashboard = () => {
                 <Card className="h-100">
                   <Card.Body>
                     <Card.Title>Total Members</Card.Title>
-                    <Card.Text>{totalMembers}</Card.Text>
+                    <Card.Text>{tootalMembers}</Card.Text>
                   </Card.Body>
                 </Card>
               </div>
@@ -567,7 +571,7 @@ const AdminDashboard = () => {
               <div className="col-md-6 mb-3">
                 <h3>Upcoming Events</h3>
                 <Table striped bordered hover>
-                  <thead>
+                  {/* <thead>
                     <tr>
                       <th>ID</th>
                       <th>Event Name</th>
@@ -580,13 +584,13 @@ const AdminDashboard = () => {
                         <td>{event.name}</td>
                       </tr>
                     ))}
-                  </tbody>
+                  </tbody> */}
                 </Table>
               </div>
               <div className="col-md-6 mb-3">
                 <h3>Birthdays</h3>
                 <Table striped bordered hover>
-                  <thead>
+                  {/* <thead>
                     <tr>
                       <th>S/N</th>
                       <th>Full Name</th>
@@ -599,14 +603,26 @@ const AdminDashboard = () => {
                         <td>{`${person.firstName} ${person.lastName}`}</td>
                       </tr>
                     ))}
-                  </tbody>
+                  </tbody> */}
                 </Table>
               </div>
             </div>
           </>
         );
       case "profile":
-        return <h2>Profile</h2>;
+        return (
+        <>
+        <h3>Profile</h3>
+        
+        {renderProfileModal()}
+        </>
+        )
+        // return (
+        //   <>
+        //     <h2>Profile</h2>
+        //     {renderProfileModal()}
+        //   </>
+        // );
       case "settings":
         return (
           <>
@@ -633,14 +649,14 @@ const AdminDashboard = () => {
           <X size={28} />
         </Button>
         <div className="sidebar-header">
-          <PersonCircle size={64} className="text-primary mb-2" />
-          <h5 className="mb-0">John Doe</h5>
-          <small className="text-muted">
+          <PersonCircle size={54} className="text-primary mb-2" style={{marginRight: '5px'}} />
+          <h5 className="mb-3">{firstName}</h5>
+          <h6 className="text">
             {" "}
             <br />
             <br />
             Admin
-          </small>
+          </h6>
         </div>
         <nav className="sidebar-nav">
           <a
