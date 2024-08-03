@@ -1,0 +1,133 @@
+.admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background: #f8f9fa;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 20px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .sidebar .close-sidebar {
+    position: absolute;
+    top: 5px;
+    right: 107px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    display: none; /* Hide by default */
+  }
+  
+  .sidebar-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar-nav a {
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .sidebar-nav a:hover,
+  .sidebar-nav a.active {
+    background: #007bff;
+    color: #fff;
+  }
+  
+  .sidebar-logout {
+    margin: 20px;
+    width: calc(100% - 40px);
+  }
+  
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+  }
+
+  .menu-icon {
+    position: fixed;
+    top: 10px;
+    left: 20px; /* Adjust this value as needed for better placement */
+    z-index: 1100;
+    border: none;
+    font-size: 24px;
+    width: 50px;
+    background-color: transparent;
+    color: red; /* Adjust this value as needed */
+  }
+
+  .menu-icon {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 769px) {
+    .menu-icon {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .menu-icon {
+      display: block;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .sidebar {
+        width: 100%;
+        position: fixed;
+        z-index: 1000;
+      }
+    
+      .content {
+        margin-left: 0;
+        width: 100%;
+      }
+    
+      .table-responsive {
+        overflow-x: auto;
+      }
+
+    .sidebar .close-sidebar {
+        display: block;
+      }
+  }
+
+  .Modal.Header closeButton {
+    color: red;
+    background-color: red;
+  }
