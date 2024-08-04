@@ -1,0 +1,30 @@
+.custom-navbar {
+    /* Ensure the navbar's styles are isolated and specific */
+    position: relative;
+    z-index: 1000;
+  }
+  
+  .custom-navbar .nav-link {
+    color: #fff !important;  /* Override any conflicting styles */
+  }
+  
+  .custom-navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-logo {
+    width: 50px;  /* Adjust as needed */
+  }
+  
+  /* .custom-container {
+     Any specific container styles 
+  } */
+  
+  /* .hero-section {
+    background-image: url('../../assets/images/TLBCSlider2.png') !important;
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+  }
+   */

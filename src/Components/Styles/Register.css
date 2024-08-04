@@ -560,6 +560,13 @@ button[type="submit"]:active {
     background-size: cover;
   }
   
+  /* In Register.css */
+/* .no-background {
+  background-color: red !important;
+  
+} */
+
+
   .hero-section small {
     color: var(--white-color);
     text-transform: uppercase;

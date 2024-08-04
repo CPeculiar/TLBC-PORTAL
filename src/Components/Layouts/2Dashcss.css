@@ -1,0 +1,97 @@
+/* App.css */
+:root {
+    --primary-color: #8e4494;
+    --secondary-color: #ffffff;
+    --text-color: #333333;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  #wrapper {
+    overflow-x: hidden;
+  }
+  
+  #sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    transition: margin 0.25s ease-out;
+  }
+  
+  #sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+  }
+  
+  #sidebar-wrapper .list-group {
+    width: 15rem;
+  }
+  
+  #page-content-wrapper {
+    min-width: 100vw;
+  }
+  
+  .sidebar {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+  }
+  
+  .sidebar .list-group-item {
+    background-color: transparent;
+    color: var(--secondary-color);
+    border: none;
+  }
+  
+  .sidebar .list-group-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .sidebar .list-group-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  @media (min-width: 768px) {
+    #sidebar-wrapper {
+      margin-left: 0;
+    }
+  
+    #page-content-wrapper {
+      min-width: 0;
+      width: 100%;
+    }
+  
+    #wrapper.toggled #sidebar-wrapper {
+      margin-left: -15rem;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    #sidebar-wrapper {
+      margin-left: -15rem;
+    }
+  
+    #wrapper.toggled #sidebar-wrapper {
+      margin-left: 0;
+    }
+  
+    .sidebar .close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--secondary-color);
+      font-size: 1.5rem;
+    }
+  }
+  
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .btn-primary:hover {
+    background-color: darken(var(--primary-color), 10%);
+    border-color: darken(var(--primary-color), 10%);
+  }

@@ -1,0 +1,53 @@
+/* App.css */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+  
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  .sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .sidebar .nav-link.active {
+    color: #007bff;
+  }
+  
+  @media (max-width: 767.98px) {
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #f8f9fa;
+      transition: 0.3s;
+    }
+  }
+  
+  .main-content {
+    margin-left: 0;
+    transition: margin-left 0.3s;
+  }
+  
+  @media (min-width: 768px) {
+    .main-content {
+      margin-left: 200px;
+    }
+  }

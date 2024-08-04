@@ -6,9 +6,8 @@ import { Country, State } from "country-state-city";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-// import Navbar from "../../Components/Navbar";
-// import Footer from "../../Components/Footer";
-import "../Styles/Register.css";
+import CustomNavbar from "../Layouts/CustomNavbar";
+import Footer from "../Layouts/Footer";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -309,7 +308,9 @@ const Register = () => {
 
   return (
     <>
-      <section className="hero-section" id="section_1">
+    <CustomNavbar />
+
+      <section className="hero-section no-background" id="section_1" >
         <div className="container d-flex justify-content-center align-items-center">
           <div className="">
             <div className="col-12 mt-4 mb-5 text-center">
@@ -324,7 +325,7 @@ const Register = () => {
         </div>
       </section>
 
-      <section className="registration-container">
+      <section className="registration-container no-background" >
         <div className="register-form">
           <form id="registration-form" method="post" onSubmit={handleSubmit}>
             <h2
@@ -812,6 +813,8 @@ const Register = () => {
           </form>
         </div>
       </section>
+
+      <Footer />
     </>
   );
 };
