@@ -1,15 +1,39 @@
+.hero-section {
+  position: relative;
+}
+
+.social-icons {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 3;
+}
+
+.social-icon {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.social-icon-item {
+  display: inline-block;
+}
+
+.social-icon-link {
+  color: white;
+  text-decoration: none;
+}
+
+.social-icon-link:hover {
+  color: red; /* Change this to the desired hover color */
+}
+
 .custom-navbar {
-    height: 7.5em;
-    z-index: 1000; /* Ensure the navbar stays above other elements */
+    height: 5em;
+    z-index: 1000; 
     background-color: #343a40;
   }
 
-.custom-logo {
-  width: 6em !important;
-  height: 3.5em !important;
-  max-width: none !important;
-  max-height: none !important;
-}
 
 .navbar-collapse {
   height: auto; 
@@ -23,14 +47,6 @@
     height: auto;
   }
   
-.icon-button a {
-  color: inherit;
-}
-
-.icon-button:hover a {
-  color: white; 
-}
-
 .icon-button:hover {
   background-color: #c0c0c0; 
 }
@@ -52,11 +68,6 @@
       height: auto;
     }
     
-    .custom-logo {
-      width: 4em !important;
-      height: 3em !important;
-    }
-
     .custom-button {
       font-size: 15px !important;
       font-weight: 50px !important;
@@ -64,6 +75,18 @@
 
     Button {
       font-size: 5px;
+    }
+
+    .social-icons {
+      bottom: 20px;
+      left: 20px;
+    }
+    
+    .custom-navbar {
+      height: auto;
+      z-index: 1000; 
+      max-height: fit-content;
+      background-color: #343a40;
     }
 
   }

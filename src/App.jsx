@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Components/Layouts/OldHomePage";
 import Login from "./Components/Auth/Login";
@@ -9,7 +9,7 @@ import ForgotPassword from "./Components/Auth/ForgotPassword";
 import NotFound from "./Components/Layouts/NotFound";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePage from './Components/Layouts/HomePage'
-
+import setupAxiosInterceptors from './Services/axiosConfig';
 
 
 const PrivateRoute = ({ children, allowedRoles }) => {
@@ -18,6 +18,11 @@ const PrivateRoute = ({ children, allowedRoles }) => {
 };
 
 const App = () => {
+
+  useEffect(() => {
+    setupAxiosInterceptors();
+  }, []);
+
   return (
     <Router>
       

@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
-import Logo from "../../assets/images/TLBC_LOGO_removebg.png";
 import '../Styles/CustomNavbar.css'
 
 function CustomNavbar() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="custom-navbar">
       <Container className="d-flex justify-content-between align-items-center custom-container">
-        <Navbar.Brand className="d-flex align-items-center">
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <img src={Logo} alt="logo" className="custom-logo" />
-          </Link>
+        <Navbar.Brand className="d-flex align-items-center"> TLBC PORTAL
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -27,6 +23,38 @@ function CustomNavbar() {
 }
 
 export default CustomNavbar;
+
+
+/**
+<Button
+                  variant="warning"
+                  size="lg"
+                  className="w-50 custom-button me-2"
+                  style={{
+                    fontWeight: "bolder",
+                    fontSize: "1.5em",
+                    color: "black",
+                  }}
+                  onClick={handleLoginClick}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="warning"
+                  size="lg"
+                  className="w-50 custom-button"
+                  style={{
+                    fontWeight: "bolder",
+                    fontSize: "1.5em",
+                    color: "black",
+                  }}
+                  onClick={handleRegisterClick}
+                >
+                  Register
+                </Button>
+              </div>
+              
+
 
 
 
@@ -62,3 +90,5 @@ export default CustomNavbar;
 // }
 
 // export default CustomNavbar;
+
+*/

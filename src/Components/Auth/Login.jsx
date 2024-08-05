@@ -1,35 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import CustomNavbar from "../Layouts/CustomNavbar";
-import Footer from "../Layouts/Footer";
 import authService from '../../Services/authService';
 import '../Styles/Login.css';
 
 
-function Login() {
+const Login = ({ onForgotPassword }) => {
   const [formData, setFormData] = useState({ username: '', password: '' });
-  const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  // const [formData, setFormData] = useState({
-  //   username: "",
-  //   password: "",
-  // });
-
-  // const handleInputChange = (e) => {
-  //   setError({});
-  //   const { name, value } = e.target;
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     [name]: value,
-  //   }));
-  // };
-
+  
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -82,78 +64,11 @@ function Login() {
     }
   };
 
-
-  //   try {
-  //     const response = await fetch(
-  //       "https://tlbc-platform-api.onrender.com/api/login/",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         credentials: "include",
-  //         body: JSON.stringify(formData),
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       const errorText = await response.text();
-  //       let errorData;
-
-  //       try {
-  //         errorData = JSON.parse(errorText);
-  //       } catch {
-  //         throw new Error("An unknown error occurred");
-  //       }
-
-  //       const firstErrorMessage = Object.values(errorData).flat()[0];
-  //       throw new Error(firstErrorMessage);
-  //     }
-
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       localStorage.setItem("accessToken", data.access);
-  //       localStorage.setItem("refreshToken", data.refresh);
-      
-
-  //       if (data.user.role === "admin" || data.user.role === "superadmin") {
-  //         navigate("/admin");
-  //       } else {
-  //         navigate("/member");
-  //       }
-  //       console.log("Logged in successfully");
-  //     } else {
-  //       const errorText = await response.text();
-  //       let errorData;
-  //       try {
-  //         errorData = JSON.parse(errorText);
-  //       } catch {
-  //         throw new Error("An unknown error occurred");
-  //       }
-  //       const firstErrorMessage = Object.values(errorData).flat()[0];
-  //       throw new Error(firstErrorMessage);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error details:", error);
-  //     alert("An error occurred: " + error.message);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-
-  return (
-    <div className="login-page">
-  
-  <CustomNavbar />
-    
-    <div className="church-homepage">
-        <Container className="login-container">
-          <div className="login-card">
-            <div className="card-body">
+  return (       
+    <div className="login-card bg-dark bg-opacity-75 rounded p-4" style={{ maxWidth: '550px', margin: '0 auto' }}>
               <Form onSubmit={handleSubmit} className="form p-3">
-              <h2 className="card-title text-center mt-2 mb-5">
-                Login to your Profile
+              <h2 className="card-title text-center mt-2 mb-5" style={{ color: 'black', fontSize: '1em'}}>
+                Login 
               </h2>
               <Form.Group className="mb-3 input-group">
                   <Form.Control
@@ -207,13 +122,14 @@ function Login() {
                     </Form.Group>
                 
                 <div className="mb-3 d-flex justify-content-end forgotPassword">
-                  <a
-                    href="/forgotpassword"
-                    className="link font-weight-bolder forgotPasswordText"
-                    style={{ fontSize: "1.3em", textDecoration: "none",  marginBottom: '5px', Color: 'black' }}
+                  <Button
+                    variant="link"
+                    onClick={onForgotPassword}
+                    className="link font-weight-bolder forgotPasswordText d-flex justify-content-end forgotPassword"
+                    style={{ fontSize: "1.1em", textDecoration: "none",  marginBottom: '5px', Color: 'black' }}
                   >
-                    Forgot Password
-                  </a>
+                    Forgot Password?
+                  </Button>
                 </div>
 
                 <button
@@ -226,13 +142,7 @@ function Login() {
                 </button>
                 {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
                 </Form>
-            </div>
-          </div>
-        </Container>
-      </div>
-
-      <Footer />
-    </div>
+            </div>    
  
   );
 }

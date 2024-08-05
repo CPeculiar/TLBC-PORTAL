@@ -86,7 +86,7 @@ const ContactSection = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-8 col-12 mx-auto">
-            <h2 className="text-center mb-4">Have any question? <br/> Send us a message</h2>
+            <h2 className="text-center mb-4">Have any question? <br/><small> Send us a message</small></h2>
 
             <nav className="d-flex justify-content-center">
               <div
