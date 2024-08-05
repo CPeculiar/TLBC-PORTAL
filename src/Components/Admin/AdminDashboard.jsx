@@ -481,7 +481,7 @@ const AdminDashboard = () => {
       if (response.ok) {
         console.log("Logged out successfully");
         localStorage.removeItem("refreshToken"); // Clear the token on logout
-        navigate("/login");
+        navigate("/");
       } else {
         console.error("Logout failed");
       }

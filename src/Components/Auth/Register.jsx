@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Form, Button, Alert, Row, Col, Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
+import authService from "../../Services/authService";
+import '../Styles/Registration.css'
 
 
 const Register = () => {
@@ -19,11 +20,10 @@ const Register = () => {
     gender: "", 
     phone_number: "",
     zone: "", 
-    wfs_graduation_year: null, 
-    enrolled_in_wfs: "", 
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
   
 
  const handleInputChange = (e) => {
@@ -113,7 +113,6 @@ const Register = () => {
       );
 
       if (!response.ok) {
-        // throw new Error(`HTTP error! status: ${response.status}`);
         const errorText = await response.text();
         let errorData;
 
@@ -128,26 +127,26 @@ const Register = () => {
         throw new Error(firstErrorMessage);
       }
 
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("accessToken", data.access);
-        localStorage.setItem("refreshToken", data.refresh);
+      const data = await response.json();
+      localStorage.setItem("accessToken", data.access);
+      localStorage.setItem("refreshToken", data.refresh);
 
-        console.log("Logged in successfully");
+      // Set the default authorization header for all future requests
+      authService.setAuthHeader(data.access);
+
+      // Get user info
+      const userInfo = await authService.getUserInfo();
+      
+      // Navigate based on user role
+      if (userInfo.role === 'admin' || userInfo.role === 'superadmin') {
+        navigate('/admin');
       } else {
-        const errorText = await response.text();
-        let errorData;
-        try {
-          errorData = JSON.parse(errorText);
-        } catch {
-          throw new Error("An unknown error occurred");
-        }
-        const firstErrorMessage = Object.values(errorData).flat()[0];
-        throw new Error(firstErrorMessage);
+        navigate('/member');
       }
+
     } catch (error) {
       console.error("Error details:", error);
-      alert("An error occurred: " + error.message);
+      setErrors({ submit: error.message });
     } finally {
       setIsLoading(false);
     }
@@ -158,38 +157,34 @@ const Register = () => {
     return re.test(String(phone));
   };
 
-  
   return (
     <>
-
-
-      {/* <section className="registration-container no-background" > */}
-      <div className="register-card bg-dark bg-opacity-75 rounded p-4" style={{ maxWidth: '700px', margin: '0 auto', overflowY: 'auto', maxHeight: '87vh' }}>
-        <div className="register-form">
+    <Container fluid className="d-flex align-items-center justify-content-center min-vh-100 py-5 mt-3">
+      <div className="register-card " style={{  overflowY: 'auto', maxHeight: '90vh' }}>
           <Form id="registration-form" method="post" onSubmit={handleSubmit}>
             <h4
               className="card-title text-center mb-4"
-              style={{ color: "#007bff" }}
+              style={{ color: "black", marginBottom: '0px' }}
             >
               Registration Form
             </h4>
             <Row>
-          <Col md={6}>
-
-            <Form.Group className="form-group first_name mb-3">
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
               <Form.Label htmlFor="first_name">First Name</Form.Label>
               <Form.Control
                 type="text"
                 id="first_name"
                 name="first_name"
                 placeholder="Enter your First Name"
+                onChange={handleInputChange}
                 value={formData.first_name}
                 isInvalid={!!errors.first_name}
           />
           <Form.Control.Feedback type="invalid">{errors.first_name}</Form.Control.Feedback>
         </Form.Group>
         </Col>
-        <Col md={6}>
+        <Col xs={12} md={6}>
             <Form.Group className="mb-3">
           <Form.Label>Last Name</Form.Label>
           <Form.Control
@@ -218,9 +213,13 @@ const Register = () => {
           <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
+
+
+        <Row>
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
             type="text"
             name="username"
             value={formData.username}
@@ -230,9 +229,24 @@ const Register = () => {
           />
           <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
         </Form.Group>
-
+        </Col>
+        <Col xs={12} md={6}>
         <Form.Group className="mb-3">
-          <Form.Label>Password (must be at least 8 characters)</Form.Label>
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            type="tel"
+            name="phone_number"
+            value={formData.phone_number}
+            onChange={handleInputChange}
+            placeholder="Enter your phone number"
+            isInvalid={!!errors.phone_number}
+          />
+          <Form.Control.Feedback type="invalid">{errors.phone_number}</Form.Control.Feedback>
+        </Form.Group>
+        </Col>
+        </Row>      
+
+        <Form.Group className="mb-1 input-group">
                     <Form.Control
                       type={passwordVisible ? "text" : "password"}
                       id="password"
@@ -242,14 +256,13 @@ const Register = () => {
                       onChange={handleInputChange}
                       placeholder="Enter your Password"
                       required
-                      isInvalid={!!errors.password}
                       style={{ paddingRight: "40px" }} // Add padding to prevent text overlap with the icon
                     />
                     <div
                       className="input-group-append position-absolute end-0 top-50 translate-middle-y"
                       style={{ zIndex: 10, paddingRight: "10px" }}
                     >
-                      <Button
+                      <button
                         type="button"
                         className="btn btn-link"
                         onClick={togglePasswordVisibility}
@@ -263,13 +276,12 @@ const Register = () => {
                           icon={passwordVisible ? faEyeSlash : faEye}
                           style={{ color: "#6c757d" }}
                         />
-                      </Button>
+                      </button>
                     </div>
-                    <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                     </Form.Group>
 
                     <Row>
-                    <Col md={6}>
+                    <Col xs={12} md={6}>
         <Form.Group className="mb-3">
           <Form.Label>Birth Date</Form.Label>
           <Form.Control
@@ -282,7 +294,7 @@ const Register = () => {
           <Form.Control.Feedback type="invalid">{errors.birth_date}</Form.Control.Feedback>
         </Form.Group>
 </Col>
- <Col md={6}>
+ <Col xs={12} md={6}>
         <Form.Group className="mb-3">
           <Form.Label>Gender</Form.Label>
           <Form.Select
@@ -301,19 +313,6 @@ const Register = () => {
         </Row>
 
         <Form.Group className="mb-3">
-          <Form.Label>Phone Number</Form.Label>
-          <Form.Control
-            type="tel"
-            name="phone_number"
-            value={formData.phone_number}
-            onChange={handleInputChange}
-            placeholder="Enter your phone number"
-            isInvalid={!!errors.phone_number}
-          />
-          <Form.Control.Feedback type="invalid">{errors.phone_number}</Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group className="mb-3">
         <Form.Label>Please select your Zone</Form.Label>
         <Form.Select
                 type="text"
@@ -324,7 +323,7 @@ const Register = () => {
                 onChange={handleInputChange}
                 isInvalid={!!errors.zone}
               >
-                <option value="" selected disabled>
+                <option value="" disabled>
                   Select your zone
                 </option>
                 <option value="Awka zone">Awka zone</option>
@@ -341,15 +340,13 @@ const Register = () => {
                 type="submit"
                 value={isLoading ? "Loading..." : "Submit"}
                 disabled={isLoading}
-                style={{ fontSize: "1.2em", fontWeight: "bold", backgroundColor: '#EE5007', border: 'none' }}
+                style={{ fontSize: "1em", fontWeight: "bold", backgroundColor: '#EE5007', border: 'none' }}
               />
             </div>
             {errors.submit && <Alert variant="danger" className="mt-3">{errors.submit}</Alert>}
           </Form>
         </div>
-  
-</div>
-
+</Container>
     </>
   );
 };

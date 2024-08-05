@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
-import '../Styles/CustomNavbar.css'
+import '../Styles/CustomNavbar.css';
+import { useFormContext } from "../Contexts/FormContext"; 
+import { useNavigate } from 'react-router-dom';
 
 function CustomNavbar() {
+  const navigate = useNavigate();
+  const { handleLoginClick, handleRegisterClick, handleSupportClick, handleBackToHome  } = useFormContext();
+
+  const handleHomeClick = () => {
+    handleBackToHome(); // Clear previous selections
+    navigate('/'); // Redirect to home page
+  };
+
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="custom-navbar">
       <Container className="d-flex justify-content-between align-items-center custom-container">
@@ -11,10 +22,11 @@ function CustomNavbar() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/home">Home</Nav.Link>
-            <Nav.Link as={Link} to="/register">Register</Nav.Link>
-            <Nav.Link as={Link} to="/login">Login</Nav.Link>
+          <Nav className="ms-auto nav-links">
+            <Nav.Link onClick={handleHomeClick}>Home</Nav.Link>
+            <Nav.Link onClick={handleRegisterClick}>Register</Nav.Link>
+            <Nav.Link onClick={handleLoginClick}>Login</Nav.Link>
+            <Nav.Link onClick={handleSupportClick}>Support</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -23,72 +35,3 @@ function CustomNavbar() {
 }
 
 export default CustomNavbar;
-
-
-/**
-<Button
-                  variant="warning"
-                  size="lg"
-                  className="w-50 custom-button me-2"
-                  style={{
-                    fontWeight: "bolder",
-                    fontSize: "1.5em",
-                    color: "black",
-                  }}
-                  onClick={handleLoginClick}
-                >
-                  Login
-                </Button>
-                <Button
-                  variant="warning"
-                  size="lg"
-                  className="w-50 custom-button"
-                  style={{
-                    fontWeight: "bolder",
-                    fontSize: "1.5em",
-                    color: "black",
-                  }}
-                  onClick={handleRegisterClick}
-                >
-                  Register
-                </Button>
-              </div>
-              
-
-
-
-
-
-
-
-
-
-// import React from 'react';
-// import { Navbar, Container } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
-
-
-// import '../../App.css'
-
-// function CustomNavbar() {
-  
-
-
-//   return (
-//     <Navbar bg="dark" variant="dark" expand="lg">
-//       <Container>
-//       <Navbar.Brand className="d-flex align-items-center ms-auto nav-title">
-//           <Link to="/"  style={{ textDecoration: 'none' }}> 
-//           <h2 className="nav-title2" 
-//           style={{ color: 'white', textDecoration: 'none' }}
-//           > TLBC
-//           </h2> </Link>
-//         </Navbar.Brand>
-//       </Container>
-//     </Navbar>
-//   );
-// }
-
-// export default CustomNavbar;
-
-*/

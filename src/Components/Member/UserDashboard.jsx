@@ -167,7 +167,7 @@ const UserDashboard = () => {
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("accessToken");
         localStorage.removeItem("user");
-        navigate("/login");
+        navigate("/");
       } else {
         console.error("Logout failed");
       }

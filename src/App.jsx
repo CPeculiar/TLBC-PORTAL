@@ -10,6 +10,7 @@ import NotFound from "./Components/Layouts/NotFound";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePage from './Components/Layouts/HomePage'
 import setupAxiosInterceptors from './Services/axiosConfig';
+import SupportForm from './Components/Layouts/Support'
 
 
 const PrivateRoute = ({ children, allowedRoles }) => {
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/member" element={<UserDashboard />} />
+        <Route path="/support" element={<SupportForm />} />
         
         
         <Route 

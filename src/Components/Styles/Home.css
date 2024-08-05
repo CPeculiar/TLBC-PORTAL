@@ -1,5 +1,52 @@
+
+.back-to-home:hover {
+  color: blue
+   !important;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.custom-button {
+  font-weight: bold;
+  color: black;
+}
+
+.custom-button:hover {
+  background-color: #FFFF8F;
+}
+
+.custom-navbar {
+  height: 5em;
+  z-index: 1000; 
+  background-color: #343a40;
+}
+
+.form-container {
+  /* background-color: red; */
+  margin: 0 auto;
+}
+
+
 .hero-section {
   position: relative;
+  overflow: hidden;
+}
+
+/* .hero-content {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}  */
+
+
+.social-icon {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .social-icons {
@@ -9,54 +56,23 @@
   z-index: 3;
 }
 
-.social-icon {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.social-icons-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
 }
 
-.social-icon-item {
-  display: inline-block;
-}
 
 .social-icon-link {
   color: white;
-  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
 }
 
 .social-icon-link:hover {
-  color: red; /* Change this to the desired hover color */
+  color: red; 
 }
-
-.custom-navbar {
-    height: 5em;
-    z-index: 1000; 
-    background-color: #343a40;
-  }
-
-
-.navbar-collapse {
-  height: auto; 
-}
-
-.navbar-collapse.show {
-  transition: max-height 0.5s ease-in;
-}
-
-  .custom-container {
-    height: auto;
-  }
-  
-.icon-button:hover {
-  background-color: #c0c0c0; 
-}
-
-.custom-button:hover {
-  background-color: #FFFF8F;
-}
-
-
-
 
 
   @media (max-width: 768px) {
@@ -73,13 +89,19 @@
       font-weight: 50px !important;
     }
 
-    Button {
-      font-size: 5px;
-    }
 
     .social-icons {
       bottom: 20px;
       left: 20px;
+    }
+
+    .social-icons-container {
+      bottom: 10px;
+      left: 10px;
+    }
+
+    .social-icon-link {
+      font-size: 1.2rem;
     }
     
     .custom-navbar {
@@ -91,23 +113,33 @@
 
   }
   
+
+  @media (max-height: 500px) and (orientation: landscape) {
+    .hero-section {
+      min-height: 120vh;
+    }
+  
+    .social-icons-container {
+      bottom: 5px;
+      left: 5px;
+    }
+  
+    .social-icon-link {
+      font-size: 1rem;
+    }
+  }
+
+
+
+
   /* Login.css */
 .login-container {
   margin-top: -8em;
 }
 
-.login-logo {
-  width: 220px;
-  height: auto;
-}
-
 @media (max-width: 768px) {
   .login-container {
     margin-top: -5em;
-  }
-
-  .login-logo {
-    width: 180px;
   }
 
   .login-card .card-body {
@@ -126,10 +158,6 @@
 @media (max-width: 576px) {
   .login-container {
     margin-top: -1em;
-  }
-
-  .login-logo {
-    width: 150px;
   }
 
   .login-card .card-body {

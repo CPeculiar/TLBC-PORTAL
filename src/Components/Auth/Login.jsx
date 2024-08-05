@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import authService from '../../Services/authService';
@@ -11,6 +12,8 @@ const Login = ({ onForgotPassword }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
   
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,6 +52,7 @@ const Login = ({ onForgotPassword }) => {
 
     try {
       await authService.login(formData.username, formData.password);
+  
       // After successful login, getUserInfo will use the saved token
       const userInfo = await authService.getUserInfo();
       
@@ -64,8 +68,11 @@ const Login = ({ onForgotPassword }) => {
     }
   };
 
-  return (       
-    <div className="login-card bg-dark bg-opacity-75 rounded p-4" style={{ maxWidth: '550px', margin: '0 auto' }}>
+  return (      
+    <Container fluid >
+     <Row className="justify-content-center">
+     <Col xs={12} sm={10} md={8} lg={6}>
+    <div className="login-card">
               <Form onSubmit={handleSubmit} className="form p-3">
               <h2 className="card-title text-center mt-2 mb-5" style={{ color: 'black', fontSize: '1em'}}>
                 Login 
@@ -130,7 +137,7 @@ const Login = ({ onForgotPassword }) => {
                   >
                     Forgot Password?
                   </Button>
-                </div>
+                  </div>
 
                 <button
                   type="submit"
@@ -142,8 +149,11 @@ const Login = ({ onForgotPassword }) => {
                 </button>
                 {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
                 </Form>
+              
             </div>    
- 
+            </Col>
+            </Row>
+            </Container>
   );
 }
 

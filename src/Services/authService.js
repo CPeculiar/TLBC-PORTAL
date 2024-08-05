@@ -12,6 +12,7 @@ const authService = {
       localStorage.setItem('refreshToken', response.data.refresh);
       // Set the default authorization header for all future requests
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+      authService.setAuthHeader(response.data.access);
     }
     return response.data;
   },
@@ -54,10 +55,14 @@ const authService = {
       localStorage.setItem('refreshToken', response.data.refresh);
       // Update the default authorization header
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+      authService.setAuthHeader(response.data.access);
       return true;
     } catch (error) {
       return false;
     }
+  },
+  setAuthHeader: (token) => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },
 };
 
